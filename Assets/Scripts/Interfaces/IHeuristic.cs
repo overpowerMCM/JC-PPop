@@ -8,6 +8,6 @@ namespace PPop.Interfaces
 {
     public interface IHeuristic
     {
-        float GetHeuristic(MapTile from, MapTile to);
+        float GetHeuristic(MapTile from, MapTile to, bool areNeighbours  = false);
     }
 }

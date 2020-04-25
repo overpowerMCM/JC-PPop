@@ -23,7 +23,7 @@ namespace PPop
             get => _cachedtransform.position;
             set => _cachedtransform.position = value;
         }
-        public IEnumerable<IAStarNode> Neighbours { get; set; }
+        public IEnumerable<IAStarNode> Neighbours { get; private set; }
 
         void Awake()
         {
@@ -31,15 +31,16 @@ namespace PPop
             _renderer = GetComponent<MeshRenderer>();
         }
 
-        public void Setup(Texture tex, float weight)
+        public void Setup(Texture tex, float weight, List<MapTile> neighbours)
         {
+            Neighbours = neighbours;
             _weight = weight;
             _renderer.material.mainTexture = tex;
         }
 
         public float CostTo(IAStarNode neighbour)
         {
-            return ((MapTile)neighbour).Weight;
+            return Heuristic.GetHeuristic( this, (MapTile)neighbour, true);
         }
 
         public float EstimatedCostTo(IAStarNode target)

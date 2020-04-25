@@ -8,6 +8,7 @@ namespace PPop.Interfaces
 {
     public interface IBuilder
     {
-
+        List<MapTile> Create(IDataProvider dataProvider);
+        List<MapTile> GetNeighbours(MapTile tile);
     }
 }
