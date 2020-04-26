@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PathFinding;
+using PPop.Input;
 using PPop.Interfaces;
 using UnityEngine;
 
@@ -10,37 +11,40 @@ namespace PPop
 {
     [Serializable]
     [RequireComponent( typeof( MeshRenderer ) )]
-    public class MapTile : MonoBehaviour, IAStarNode
+    public class MapTile : InteractiveTile, IAStarNode
     {
-        Transform _cachedtransform;
         IHeuristic _heuristic;
         [SerializeField]float _weight = 0f;
         [SerializeField] int _x, _y;
+        [SerializeField] bool _walkable;
         MeshRenderer _renderer;
 
         [SerializeField]List<MapTile> _neighbours;
         
         public IHeuristic Heuristic { get => _heuristic??(_heuristic = new Heuristics.Euclidian()); set => _heuristic = value; }
         public float Weight { get => _weight; }
+        public bool Walkable { get => _walkable; }
         public int X { get => _x; set => _x = value; }
         public int Y { get => _y; set => _y = value; }
+
         public Vector3 Position
         {
-            get => _cachedtransform.localPosition;
-            set => _cachedtransform.localPosition = value;
+            get => CatchedTransform.localPosition;
+            set => CatchedTransform.localPosition = value;
         }
         public IEnumerable<IAStarNode> Neighbours { get=> _neighbours; private set=> _neighbours = (List<MapTile>)value; }
 
-        void Awake()
+        protected override void Awake()
         {
-            _cachedtransform = transform;
+            base.Awake();
             _renderer = GetComponent<MeshRenderer>();
         }
 
-        public void Setup(Texture tex, float weight, List<MapTile> neighbours)
+        public void Setup(Texture tex, float weight, bool walkable, List<MapTile> neighbours)
         {
             Neighbours = neighbours;
             _weight = weight;
+            _walkable = Walkable;
             _renderer.material = Resources.Load<Material>("Materials/Tile");
             _renderer.material.SetTexture("_MainTex", tex);
             SetTintColor(Color.white);

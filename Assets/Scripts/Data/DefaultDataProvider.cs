@@ -38,11 +38,11 @@ namespace PPop.Data
         {
             return new TileModel[]
             {
-                new TileModel(){ id = 1, Name = "Grass", weight = 1},
-                new TileModel(){ id = 2, Name = "Forest", weight = 3},
-                new TileModel(){ id = 3, Name = "Desert", weight = 5},
-                new TileModel(){ id = 4, Name = "Mountain", weight = 10},
-                new TileModel(){ id = 5, Name = "Water", weight = 1024*1024},
+                new TileModel(){ id = 1, Name = "Grass", weight = 1, walkable = true},
+                new TileModel(){ id = 2, Name = "Forest", weight = 3, walkable = true},
+                new TileModel(){ id = 3, Name = "Desert", weight = 5, walkable = true},
+                new TileModel(){ id = 4, Name = "Mountain", weight = 10, walkable = true},
+                new TileModel(){ id = 5, Name = "Water", weight = 1024*1024, walkable = false},
             };
         }
     }

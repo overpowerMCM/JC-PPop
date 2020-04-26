@@ -13,5 +13,6 @@ namespace PPop.Model
         public int id;
         public string Name;
         public float weight;
+        public bool walkable;
     }
 }
