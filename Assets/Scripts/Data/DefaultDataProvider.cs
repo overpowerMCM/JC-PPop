@@ -16,14 +16,20 @@ namespace PPop.Data
             return new MapModel()
             {
                 mapType = Enums.EMapType.HEXAGONAL,
-                width = 4,
-                height = 4,
+                MapWidth = 8,
+                MapHeight = 8,
+                TileHeight = 1,
+                TileWidth = 1,
                 tiles = new int[] 
                 {
-                    1,1,1,2,
-                    1,3,3,4,
-                    2,3,5,4,
-                    2,3,5,2
+                    3,3,1,5,1,4,4,1,
+                    3,3,3,2,1,2,4,2,
+                    3,2,3,1,1,4,3,1,
+                    3,2,5,2,4,2,3,3,
+                    5,5,5,2,4,2,1,3,
+                    2,2,3,1,5,5,1,5,
+                    1,2,4,2,2,1,5,5,
+                    4,4,4,2,1,2,1,5
                 }
             };
         }
@@ -36,7 +42,7 @@ namespace PPop.Data
                 new TileModel(){ id = 2, Name = "Forest", weight = 3},
                 new TileModel(){ id = 3, Name = "Desert", weight = 5},
                 new TileModel(){ id = 4, Name = "Mountain", weight = 10},
-                new TileModel(){ id = 5, Name = "Water", weight = 256*256},
+                new TileModel(){ id = 5, Name = "Water", weight = 1024*1024},
             };
         }
     }

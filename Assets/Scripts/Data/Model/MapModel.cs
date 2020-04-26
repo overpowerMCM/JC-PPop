@@ -8,11 +8,15 @@ using System.Threading.Tasks;
 namespace PPop.Model
 {
     [Serializable]
-    public struct MapModel
+    public class MapModel
     {
         public EMapType mapType;
-        public int width;
-        public int height;
+        public int MapWidth;
+        public int MapHeight;
+
+        public float TileHeight;
+        public float TileWidth;
+
         public int[] tiles;
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace PPop.Model
 {
     [Serializable]
-    public struct TileModel
+    public class TileModel
     {
         public int id;
         public string Name;

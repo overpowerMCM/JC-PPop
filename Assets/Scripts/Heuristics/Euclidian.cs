@@ -13,7 +13,7 @@ namespace PPop.Heuristics
         {
             if (areNeighbour)
                 return to.Weight;
-            return (Vector3.Distance(from.Position, to.Position) / 5f) * ((from.Weight+to.Weight) * 0.5f);
+            return Vector3.Distance(from.Position, to.Position)  * ((from.Weight+to.Weight) * 0.5f);
         }
     }
 }

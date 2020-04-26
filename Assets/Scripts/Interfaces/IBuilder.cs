@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace PPop.Interfaces
 {
     public interface IBuilder
     {
-        List<MapTile> Create(IDataProvider dataProvider);
-        List<MapTile> GetNeighbours(MapTile tile);
+        List<MapTile> Create(IDataProvider dataProvider, Transform parent);
+        List<MapTile> GetNeighbours(List<MapTile> tiles, MapTile tile);
     }
 }
