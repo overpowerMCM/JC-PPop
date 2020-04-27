@@ -48,20 +48,19 @@ namespace PPop.Builders
                     // set positions
                     mapTile.Position = CalculatePosition(_topLeftCorner,mapTile);
 
+                    int index = y * _mapdata.MapHeight + x;
+                    int id = _mapdata.tiles[index];
+                    var tile = _tiledata.SingleOrDefault(t => t.id == id);
+
+                    mapTile.Setup( Resources.Load<Texture>(string.Format("Textures/{0}", tile.Name.ToLower())), tile.weight, tile.walkable, string.Format("Hex_{0}_{1}_{2}", mapTile.X, mapTile.Y, tile.Name));
+                    
                     mapTiles.Add(mapTile);
                 }
             }
 
             foreach( MapTile mapTile in mapTiles )
             { 
-                int index = mapTile.Y * _mapdata.MapHeight + mapTile.X;
-                int id = _mapdata.tiles[index];
-                var tile = _tiledata.SingleOrDefault(t => t.id == id);
-
-                mapTile.Setup( Resources.Load<Texture>(string.Format("Textures/{0}", tile.Name.ToLower())), tile.walkable?tile.weight:(_mapdata.MapWidth*_mapdata.MapHeight*10), tile.walkable, GetNeighbours( mapTiles, mapTile ));
-
-                mapTile.name = string.Format("Hex_{0}_{1}_{2}", mapTile.X, mapTile.Y, tile.Name);
-
+                mapTile.Neighbours = mapTile.Walkable ? GetNeighbours(mapTiles, mapTile) : null;
             }
 
             return mapTiles;
@@ -93,6 +92,13 @@ namespace PPop.Builders
 
         }
 
+        private void ValidateAndAddNeighbourg(int x, int y, List<MapTile> tiles, List<MapTile> neighbours )
+        {
+            MapTile _neighbourdCandidate = tiles[y * _mapdata.MapHeight + x];
+            if (_neighbourdCandidate.Walkable)
+                neighbours.Add(_neighbourdCandidate);
+        }
+
         public List<MapTile> GetNeighbours(List<MapTile> tiles, MapTile tile)
         {
             List<MapTile> neighbours = new List<MapTile>();
@@ -105,19 +111,19 @@ namespace PPop.Builders
             // common
             if (xn >= 0)//
             {
-                neighbours.Add(tiles[tile.Y * _mapdata.MapHeight + xn]);
+                ValidateAndAddNeighbourg(xn, tile.Y, tiles, neighbours);
             }
             if (xp < _mapdata.MapWidth)//
             {
-                neighbours.Add(tiles[tile.Y * _mapdata.MapHeight + xp]);
+                ValidateAndAddNeighbourg(xp, tile.Y, tiles, neighbours);
             }
             if (yn >= 0)//
             {
-                neighbours.Add(tiles[yn * _mapdata.MapHeight + tile.X]);
+                ValidateAndAddNeighbourg(tile.X, yn, tiles, neighbours);
             }
             if (yp < _mapdata.MapHeight)//
             {
-                neighbours.Add(tiles[yp * _mapdata.MapHeight + tile.X]);
+                ValidateAndAddNeighbourg(tile.X, yp, tiles, neighbours);
             }
 
             // even rows
@@ -125,25 +131,35 @@ namespace PPop.Builders
             {
                 if (xn >= 0 && yp < _mapdata.MapHeight)
                 {
-                    neighbours.Add(tiles[yp * _mapdata.MapHeight + xn]);
+                    ValidateAndAddNeighbourg(xn, yp, tiles, neighbours);
                 }
                 if (xn >= 0 && yn >= 0)
                 {
-                    neighbours.Add(tiles[yn * _mapdata.MapHeight + xn]);
+                    ValidateAndAddNeighbourg(xn, yn, tiles, neighbours);
                 }
             }
             else // odd rows
             {
                 if (xp < _mapdata.MapWidth && yn >= 0)
                 {
-                    neighbours.Add(tiles[yn * _mapdata.MapHeight + xp]);
+                    ValidateAndAddNeighbourg(xp, yn, tiles, neighbours);
                 }
                 if (xp < _mapdata.MapWidth && yp < _mapdata.MapHeight)
                 {
-                    neighbours.Add(tiles[yp * _mapdata.MapHeight + xp]);
+                    //neighbours.Add(tiles[yp * _mapdata.MapHeight + xp]);
+                    ValidateAndAddNeighbourg(xp, yp, tiles, neighbours);
                 }
             }
-           
+            /*
+            neighbours.Sort(
+                (a, b) => 
+                {
+                    if(a.Weight == b.Weight) return 0;
+                    if (a.Weight > b.Weight) return -1;
+                    else return 1;
+
+                } );
+            */
             return neighbours;
         }
 

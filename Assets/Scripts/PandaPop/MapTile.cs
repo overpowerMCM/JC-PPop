@@ -32,7 +32,7 @@ namespace PPop
             get => CatchedTransform.localPosition;
             set => CatchedTransform.localPosition = value;
         }
-        public IEnumerable<IAStarNode> Neighbours { get=> _neighbours; private set=> _neighbours = (List<MapTile>)value; }
+        public IEnumerable<IAStarNode> Neighbours { get=> _neighbours; set=> _neighbours = (List<MapTile>)value; }
 
         protected override void Awake()
         {
@@ -40,11 +40,11 @@ namespace PPop
             _renderer = GetComponent<MeshRenderer>();
         }
 
-        public void Setup(Texture tex, float weight, bool walkable, List<MapTile> neighbours)
+        public void Setup(Texture tex, float weight, bool walkable, string name)
         {
-            Neighbours = neighbours;
+            this.name = name;
             _weight = weight;
-            _walkable = Walkable;
+            _walkable = walkable;
             _renderer.material = Resources.Load<Material>("Materials/Tile");
             _renderer.material.SetTexture("_MainTex", tex);
             SetTintColor(Color.white);

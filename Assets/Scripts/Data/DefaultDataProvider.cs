@@ -42,7 +42,7 @@ namespace PPop.Data
                 new TileModel(){ id = 2, Name = "Forest", weight = 3, walkable = true},
                 new TileModel(){ id = 3, Name = "Desert", weight = 5, walkable = true},
                 new TileModel(){ id = 4, Name = "Mountain", weight = 10, walkable = true},
-                new TileModel(){ id = 5, Name = "Water", weight = 1024*1024, walkable = false},
+                new TileModel(){ id = 5, Name = "Water", weight = 0, walkable = false},
             };
         }
     }

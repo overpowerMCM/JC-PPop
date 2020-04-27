@@ -15,7 +15,7 @@ public class HexEuclidian : PPop.Interfaces.IHeuristic
         float dist = 0f;
 
         if (Mathf.Sign(dx).Equals(Mathf.Sign(dy)))
-        {    // this is (1); see first paragraph
+        { 
             dist = Mathf.Max(Mathf.Abs(dx), Mathf.Abs(dy));
         }
         else
@@ -23,6 +23,6 @@ public class HexEuclidian : PPop.Interfaces.IHeuristic
             dist = Mathf.Abs(dx) + Mathf.Abs(dy);
         }
 
-        return dist * (from.Weight + to.Weight) * 0.5f;
+        return dist;
     }
 }
